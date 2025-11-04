@@ -2,7 +2,7 @@
  * Shared types for V3 Print Agent
  */
 
-export type DocumentType = 'shipping-label' | 'invoice' | 'packing-slip' | 'pick-list';
+export type DocumentType = 'shipping-label' | 'invoice' | 'packing-slip' | 'pick-list' | 'po-carton-label' | 'product-label';
 
 export type PrintFormat = 'ZPL' | 'ZPLII' | 'PDF' | 'PNG';
 

@@ -110,6 +110,18 @@ export async function loadConfig(): Promise<StationConfig> {
           autoPrint: false,
           enabled: false,
           is4x6: false
+        },
+        'po-carton-label': {
+          name: '',
+          autoPrint: false,
+          enabled: false,
+          is4x6: false
+        },
+        'product-label': {
+          name: '',
+          autoPrint: false,
+          enabled: false,
+          is4x6: false
         }
       },
       apiUrl: 'http://localhost:3002',
