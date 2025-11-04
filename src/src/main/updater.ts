@@ -10,7 +10,7 @@ import path from 'path';
 import os from 'os';
 
 const UPDATE_CHECK_URL = 'https://api.github.com/repos/SynergySmart/V3-Print-Agent/releases/latest';
-const CURRENT_VERSION = '1.0.7';
+const CURRENT_VERSION = '1.0.8';
 
 interface GitHubRelease {
   tag_name: string;

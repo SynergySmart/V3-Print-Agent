@@ -123,18 +123,20 @@ export async function printDocument(job: PrintJobRequest): Promise<{ printer: st
     const tempFile = path.join(os.tmpdir(), `v3-print-${Date.now()}.pdf`);
     fs.writeFileSync(tempFile, pdfBuffer);
 
-    // Use 'fit' scaling - fits to Windows printer's configured paper size
-    // Maintains aspect ratio and respects printer settings (no hardcoded sizes)
+    // Use 'noscale' - print PDF at actual size
+    // Relies on Windows printer settings being configured correctly:
+    // - Paper size should match label size (e.g., 2.25x1.25, 4x6)
+    // - Orientation should be set to auto or match label orientation
     await print(tempFile, {
       printer: printerConfig.name,
-      scale: 'fit',  // Fit to printer's configured paper size
-      // No orientation specified - let PDF's natural orientation be used
+      scale: 'noscale'  // Print at actual PDF size, no scaling
+      // No orientation - let PDF and printer settings handle it
     });
 
     // Cleanup temp file
     fs.unlinkSync(tempFile);
 
-    console.log(`[Printer] Job ${job.jobId} sent to printer successfully (scale: fit)`);
+    console.log(`[Printer] Job ${job.jobId} sent to printer successfully (scale: noscale)`);
 
     return {
       printer: printerConfig.name

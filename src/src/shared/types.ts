@@ -67,6 +67,11 @@ export interface StationConfig {
       is4x6: boolean; // True for thermal label printers, false for standard letter-size printers
     };
   };
+  // Template selections for labels
+  templates?: {
+    poCartonLabelTemplateId?: string;
+    productLabelTemplateId?: string;
+  };
   apiUrl: string;
   lastModified: string;
 }

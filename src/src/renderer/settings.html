@@ -14,127 +14,193 @@
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       background: #f5f5f5;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .app-container {
+      display: flex;
+      height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #2c3e50;
+      color: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-header {
       padding: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
+    .sidebar-header h1 {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .sidebar-header p {
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+      margin-top: 4px;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 12px 0;
+    }
+
+    .nav-item {
+      padding: 12px 20px;
+      cursor: pointer;
+      transition: background 0.2s;
+      font-size: 14px;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-item:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .nav-item.active {
+      background: rgba(255,255,255,0.1);
+      border-left-color: #3498db;
+    }
+
+    /* Main Content */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       background: white;
-      border-radius: 8px;
-      padding: 24px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
 
-    h1 {
-      font-size: 24px;
-      margin-bottom: 8px;
+    .content-header {
+      padding: 24px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .content-header h2 {
+      font-size: 20px;
       color: #1a1a1a;
     }
 
-    .subtitle {
-      color: #666;
-      margin-bottom: 20px;
-      font-size: 14px;
+    .content-body {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
     }
 
-    .printers-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 20px;
+    .content-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #e5e7eb;
+      text-align: right;
+      background: #f9fafb;
     }
 
-    .section {
-      margin-bottom: 0;
-      padding: 12px;
-      border: 1px solid #e0e0e0;
-      border-radius: 6px;
+    /* Form Elements */
+    .form-section {
+      margin-bottom: 24px;
     }
 
-    .section-title {
-      font-size: 14px;
+    .form-section-title {
+      font-size: 16px;
       font-weight: 600;
-      margin-bottom: 10px;
-      color: #333;
+      color: #374151;
+      margin-bottom: 12px;
     }
 
     .form-group {
-      margin-bottom: 10px;
+      margin-bottom: 16px;
     }
 
     label {
       display: block;
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 500;
-      color: #555;
+      color: #6b7280;
       margin-bottom: 6px;
     }
 
     select, input[type="text"] {
       width: 100%;
       padding: 8px 12px;
-      border: 1px solid #d0d0d0;
-      border-radius: 4px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
       font-size: 14px;
+      background: white;
+    }
+
+    select:focus, input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
 
     .checkbox-group {
       display: flex;
       align-items: center;
       gap: 8px;
+      margin-bottom: 12px;
     }
 
     .checkbox-group input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
     }
 
     .checkbox-group label {
       margin: 0;
       font-weight: normal;
+      cursor: pointer;
     }
 
-    button {
-      padding: 8px 16px;
+    /* Buttons */
+    .btn {
+      padding: 10px 20px;
       border: none;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: all 0.2s;
     }
 
     .btn-primary {
-      background: #2563eb;
+      background: #3b82f6;
       color: white;
     }
 
     .btn-primary:hover {
-      background: #1d4ed8;
+      background: #2563eb;
     }
 
     .btn-secondary {
-      background: #6b7280;
-      color: white;
-      margin-left: 8px;
+      background: white;
+      color: #374151;
+      border: 1px solid #d1d5db;
     }
 
     .btn-secondary:hover {
-      background: #4b5563;
+      background: #f9fafb;
     }
 
+    /* Status Messages */
     .status {
       padding: 12px;
-      border-radius: 4px;
+      border-radius: 6px;
       margin-bottom: 16px;
       font-size: 14px;
     }
 
     .status.success {
-      background: #dcfce7;
-      border: 1px solid #86efac;
-      color: #166534;
+      background: #d1fae5;
+      border: 1px solid #6ee7b7;
+      color: #065f46;
     }
 
     .status.error {
@@ -143,141 +209,207 @@
       color: #991b1b;
     }
 
-    .buttons {
-      margin-top: 24px;
-      display: flex;
-      gap: 8px;
+    /* Tab Content */
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Grid for PO tab */
+    .po-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .section-card {
+      padding: 16px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #f9fafb;
+    }
+
+    .section-card h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 16px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>V3 Print Agent Settings</h1>
-    <p class="subtitle">Configure printers for automatic label and document printing</p>
-
-    <div id="status"></div>
-
-    <div class="section">
-      <div class="section-title">Station Information</div>
-      <div class="form-group">
-        <label>Station ID</label>
-        <input type="text" id="stationId" readonly style="background: #f0f0f0;">
+  <div class="app-container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-header">
+        <h1>Print Agent</h1>
+        <p id="stationIdDisplay">Loading...</p>
       </div>
-      <div class="form-group">
-        <label>Station Name</label>
-        <input type="text" id="stationName" placeholder="e.g., Packing Station 1">
-      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-item active" onclick="showTab('shipping')">Shipping Labels</div>
+        <div class="nav-item" onclick="showTab('invoices')">Invoices</div>
+        <div class="nav-item" onclick="showTab('packing')">Packing Slips</div>
+        <div class="nav-item" onclick="showTab('purchase-orders')">Purchase Orders</div>
+      </nav>
     </div>
 
-    <div class="printers-grid">
-    <div class="section">
-      <div class="section-title">Shipping Labels</div>
-      <div class="form-group">
-        <label>Printer</label>
-        <select id="labelPrinter">
-          <option value="">-- Select Printer --</option>
-        </select>
+    <!-- Main Content -->
+    <div class="content">
+      <div class="content-header">
+        <h2 id="contentTitle">Shipping Labels</h2>
       </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="labelAutoPrint">
-        <label for="labelAutoPrint">Auto-print (no dialog)</label>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="labelIs4x6">
-        <label for="labelIs4x6">4x6 thermal printer (uncheck for 8.5x11 laser printers)</label>
-      </div>
-      <button class="btn-secondary" onclick="testPrint('shipping-label')">Test Print</button>
-    </div>
 
-    <div class="section">
-      <div class="section-title">Invoices</div>
-      <div class="form-group">
-        <label>Printer</label>
-        <select id="invoicePrinter">
-          <option value="">-- Select Printer --</option>
-        </select>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="invoiceAutoPrint">
-        <label for="invoiceAutoPrint">Auto-print (no dialog)</label>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="invoiceIs4x6">
-        <label for="invoiceIs4x6">4x6 thermal printer (uncheck for 8.5x11 laser printers)</label>
-      </div>
-      <button class="btn-secondary" onclick="testPrint('invoice')">Test Print</button>
-    </div>
+      <div class="content-body">
+        <div id="status"></div>
 
-    <div class="section">
-      <div class="section-title">Packing Slips</div>
-      <div class="form-group">
-        <label>Printer</label>
-        <select id="packingSlipPrinter">
-          <option value="">-- Select Printer --</option>
-        </select>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="packingSlipAutoPrint">
-        <label for="packingSlipAutoPrint">Auto-print (no dialog)</label>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="packingSlipIs4x6">
-        <label for="packingSlipIs4x6">4x6 thermal printer (uncheck for 8.5x11 laser printers)</label>
-      </div>
-      <button class="btn-secondary" onclick="testPrint('packing-slip')">Test Print</button>
-    </div>
+        <!-- Shipping Labels Tab -->
+        <div id="tab-shipping" class="tab-content active">
+          <div class="form-section">
+            <div class="form-section-title">Station Information</div>
+            <div class="form-group">
+              <label>Station Name</label>
+              <input type="text" id="stationName" placeholder="e.g., Packing Station 1">
+            </div>
+          </div>
 
-    <div class="section">
-      <div class="section-title">PO Carton Labels</div>
-      <div class="form-group">
-        <label>Printer</label>
-        <select id="poCartonLabelPrinter">
-          <option value="">-- Select Printer --</option>
-        </select>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="poCartonLabelAutoPrint">
-        <label for="poCartonLabelAutoPrint">Auto-print (no dialog)</label>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="poCartonLabelIs4x6">
-        <label for="poCartonLabelIs4x6">4x6 thermal printer (uncheck for 8.5x11 laser printers)</label>
-      </div>
-      <button class="btn-secondary" onclick="testPrint('po-carton-label')">Test Print</button>
-    </div>
+          <div class="form-section">
+            <div class="form-section-title">Shipping Label Printer</div>
+            <div class="form-group">
+              <label>Printer</label>
+              <select id="labelPrinter">
+                <option value="">-- Select Printer --</option>
+              </select>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="labelAutoPrint">
+              <label for="labelAutoPrint">Auto-print (no dialog)</label>
+            </div>
+          </div>
+        </div>
 
-    <div class="section">
-      <div class="section-title">Product Labels</div>
-      <div class="form-group">
-        <label>Printer</label>
-        <select id="productLabelPrinter">
-          <option value="">-- Select Printer --</option>
-        </select>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="productLabelAutoPrint">
-        <label for="productLabelAutoPrint">Auto-print (no dialog)</label>
-      </div>
-      <div class="checkbox-group">
-        <input type="checkbox" id="productLabelIs4x6">
-        <label for="productLabelIs4x6">4x6 thermal printer (uncheck for 8.5x11 laser printers)</label>
-      </div>
-      <button class="btn-secondary" onclick="testPrint('product-label')">Test Print</button>
-    </div>
-    </div>
+        <!-- Invoices Tab -->
+        <div id="tab-invoices" class="tab-content">
+          <div class="form-section">
+            <div class="form-section-title">Invoice Printer</div>
+            <div class="form-group">
+              <label>Printer</label>
+              <select id="invoicePrinter">
+                <option value="">-- Select Printer --</option>
+              </select>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="invoiceAutoPrint">
+              <label for="invoiceAutoPrint">Auto-print (no dialog)</label>
+            </div>
+          </div>
+        </div>
 
-    <div class="buttons">
-      <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
-      <button class="btn-secondary" onclick="reloadPrinters()">Refresh Printers</button>
+        <!-- Packing Slips Tab -->
+        <div id="tab-packing" class="tab-content">
+          <div class="form-section">
+            <div class="form-section-title">Packing Slip Printer</div>
+            <div class="form-group">
+              <label>Printer</label>
+              <select id="packingSlipPrinter">
+                <option value="">-- Select Printer --</option>
+              </select>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="packingSlipAutoPrint">
+              <label for="packingSlipAutoPrint">Auto-print (no dialog)</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Purchase Orders Tab -->
+        <div id="tab-purchase-orders" class="tab-content">
+          <div class="po-grid">
+            <!-- PO Carton Labels -->
+            <div class="section-card">
+              <h3>PO Carton Labels</h3>
+              <div class="form-group">
+                <label>Printer</label>
+                <select id="poCartonPrinter">
+                  <option value="">-- Select Printer --</option>
+                </select>
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="poCartonAutoPrint">
+                <label for="poCartonAutoPrint">Auto-print</label>
+              </div>
+              <div class="form-group">
+                <label>Default Template</label>
+                <select id="poCartonTemplate">
+                  <option value="">-- Select Template --</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Product Labels -->
+            <div class="section-card">
+              <h3>Product Labels</h3>
+              <div class="form-group">
+                <label>Printer</label>
+                <select id="productLabelPrinter">
+                  <option value="">-- Select Printer --</option>
+                </select>
+              </div>
+              <div class="checkbox-group">
+                <input type="checkbox" id="productLabelAutoPrint">
+                <label for="productLabelAutoPrint">Auto-print</label>
+              </div>
+              <div class="form-group">
+                <label>Default Template</label>
+                <select id="productLabelTemplate">
+                  <option value="">-- Select Template --</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-footer">
+        <button class="btn btn-secondary" onclick="reloadPrinters()" style="margin-right: 8px;">Refresh Printers</button>
+        <button class="btn btn-primary" onclick="saveSettings()">Save Settings</button>
+      </div>
     </div>
   </div>
 
   <script>
     const { ipcRenderer } = require('electron');
 
-    // Load printers and config on startup
+    let currentTab = 'shipping';
+    let availableTemplates = [];
+
+    // Tab switching
+    function showTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+
+      // Show selected tab
+      document.getElementById(`tab-${tabName}`).classList.add('active');
+      event.target.classList.add('active');
+
+      // Update header title
+      const titles = {
+        'shipping': 'Shipping Labels',
+        'invoices': 'Invoices',
+        'packing': 'Packing Slips',
+        'purchase-orders': 'Purchase Orders'
+      };
+      document.getElementById('contentTitle').textContent = titles[tabName];
+      currentTab = tabName;
+    }
+
+    // Load on startup
     window.addEventListener('DOMContentLoaded', async () => {
       await loadPrinters();
+      await loadTemplates();
       await loadConfig();
     });
 
@@ -285,25 +417,67 @@
       try {
         const response = await fetch('http://localhost:8080/printers');
         const data = await response.json();
-
         const printers = data.printers || [];
 
         // Populate all printer dropdowns
-        const selects = ['labelPrinter', 'invoicePrinter', 'packingSlipPrinter', 'poCartonLabelPrinter', 'productLabelPrinter'];
+        const selects = ['labelPrinter', 'invoicePrinter', 'packingSlipPrinter', 'poCartonPrinter', 'productLabelPrinter'];
 
         selects.forEach(selectId => {
           const select = document.getElementById(selectId);
-          select.innerHTML = '<option value="">-- Select Printer --</option>';
-
-          printers.forEach(p => {
-            const option = document.createElement('option');
-            option.value = p.name;
-            option.textContent = `${p.name} ${p.isDefault ? '(Default)' : ''}`;
-            select.appendChild(option);
-          });
+          if (select) {
+            select.innerHTML = '<option value="">-- Select Printer --</option>';
+            printers.forEach(p => {
+              const option = document.createElement('option');
+              option.value = p.name;
+              option.textContent = p.name;
+              select.appendChild(option);
+            });
+          }
         });
       } catch (error) {
         showStatus('Failed to load printers', 'error');
+      }
+    }
+
+    async function loadTemplates() {
+      try {
+        // Get API URL and accountId from config
+        const configResponse = await fetch('http://localhost:8080/config');
+        const config = await configResponse.json();
+        const apiUrl = config.apiUrl || 'http://localhost:3002';
+
+        // For now, we need accountId - we'll get it from first auth call or hardcode for development
+        // In production, the backend would provide this
+        const accountId = '1800001'; // TODO: Get from auth token or config
+
+        const response = await fetch(`${apiUrl}/accounts/${accountId}/label-templates?type=po-carton`, {
+          headers: {
+            // TODO: Need auth token - for now this might fail in production
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          availableTemplates = data?.data || data || [];
+
+          // Populate template dropdowns
+          const poCartonSelect = document.getElementById('poCartonTemplate');
+          const productLabelSelect = document.getElementById('productLabelTemplate');
+
+          [poCartonSelect, productLabelSelect].forEach(select => {
+            if (select) {
+              select.innerHTML = '<option value="">-- Select Template --</option>';
+              availableTemplates.forEach(template => {
+                const option = document.createElement('option');
+                option.value = template.templateId;
+                option.textContent = template.name;
+                select.appendChild(option);
+              });
+            }
+          });
+        }
+      } catch (error) {
+        console.log('Failed to load templates (expected if not authenticated):', error);
       }
     }
 
@@ -312,38 +486,43 @@
         const response = await fetch('http://localhost:8080/config');
         const config = await response.json();
 
-        document.getElementById('stationId').value = config.stationId;
+        document.getElementById('stationIdDisplay').textContent = config.stationId;
         document.getElementById('stationName').value = config.stationName;
 
         // Load printer configs
         if (config.printers['shipping-label']) {
           document.getElementById('labelPrinter').value = config.printers['shipping-label'].name || '';
           document.getElementById('labelAutoPrint').checked = config.printers['shipping-label'].autoPrint || false;
-          document.getElementById('labelIs4x6').checked = config.printers['shipping-label'].is4x6 || false;
         }
 
         if (config.printers.invoice) {
           document.getElementById('invoicePrinter').value = config.printers.invoice.name || '';
           document.getElementById('invoiceAutoPrint').checked = config.printers.invoice.autoPrint || false;
-          document.getElementById('invoiceIs4x6').checked = config.printers.invoice.is4x6 || false;
         }
 
         if (config.printers['packing-slip']) {
           document.getElementById('packingSlipPrinter').value = config.printers['packing-slip'].name || '';
           document.getElementById('packingSlipAutoPrint').checked = config.printers['packing-slip'].autoPrint || false;
-          document.getElementById('packingSlipIs4x6').checked = config.printers['packing-slip'].is4x6 || false;
         }
 
         if (config.printers['po-carton-label']) {
-          document.getElementById('poCartonLabelPrinter').value = config.printers['po-carton-label'].name || '';
-          document.getElementById('poCartonLabelAutoPrint').checked = config.printers['po-carton-label'].autoPrint || false;
-          document.getElementById('poCartonLabelIs4x6').checked = config.printers['po-carton-label'].is4x6 || false;
+          document.getElementById('poCartonPrinter').value = config.printers['po-carton-label'].name || '';
+          document.getElementById('poCartonAutoPrint').checked = config.printers['po-carton-label'].autoPrint || false;
         }
 
         if (config.printers['product-label']) {
           document.getElementById('productLabelPrinter').value = config.printers['product-label'].name || '';
           document.getElementById('productLabelAutoPrint').checked = config.printers['product-label'].autoPrint || false;
-          document.getElementById('productLabelIs4x6').checked = config.printers['product-label'].is4x6 || false;
+        }
+
+        // Load template selections
+        if (config.templates) {
+          if (config.templates.poCartonLabelTemplateId) {
+            document.getElementById('poCartonTemplate').value = config.templates.poCartonLabelTemplateId;
+          }
+          if (config.templates.productLabelTemplateId) {
+            document.getElementById('productLabelTemplate').value = config.templates.productLabelTemplateId;
+          }
         }
       } catch (error) {
         showStatus('Failed to load configuration', 'error');
@@ -359,32 +538,36 @@
               name: document.getElementById('labelPrinter').value,
               autoPrint: document.getElementById('labelAutoPrint').checked,
               enabled: document.getElementById('labelPrinter').value !== '',
-              is4x6: document.getElementById('labelIs4x6').checked
+              is4x6: false
             },
             'invoice': {
               name: document.getElementById('invoicePrinter').value,
               autoPrint: document.getElementById('invoiceAutoPrint').checked,
               enabled: document.getElementById('invoicePrinter').value !== '',
-              is4x6: document.getElementById('invoiceIs4x6').checked
+              is4x6: false
             },
             'packing-slip': {
               name: document.getElementById('packingSlipPrinter').value,
               autoPrint: document.getElementById('packingSlipAutoPrint').checked,
               enabled: document.getElementById('packingSlipPrinter').value !== '',
-              is4x6: document.getElementById('packingSlipIs4x6').checked
+              is4x6: false
             },
             'po-carton-label': {
-              name: document.getElementById('poCartonLabelPrinter').value,
-              autoPrint: document.getElementById('poCartonLabelAutoPrint').checked,
-              enabled: document.getElementById('poCartonLabelPrinter').value !== '',
-              is4x6: document.getElementById('poCartonLabelIs4x6').checked
+              name: document.getElementById('poCartonPrinter').value,
+              autoPrint: document.getElementById('poCartonAutoPrint').checked,
+              enabled: document.getElementById('poCartonPrinter').value !== '',
+              is4x6: false
             },
             'product-label': {
               name: document.getElementById('productLabelPrinter').value,
               autoPrint: document.getElementById('productLabelAutoPrint').checked,
               enabled: document.getElementById('productLabelPrinter').value !== '',
-              is4x6: document.getElementById('productLabelIs4x6').checked
+              is4x6: false
             }
+          },
+          templates: {
+            poCartonLabelTemplateId: document.getElementById('poCartonTemplate').value,
+            productLabelTemplateId: document.getElementById('productLabelTemplate').value
           }
         };
 
@@ -409,21 +592,18 @@
       showStatus('Printers refreshed', 'success');
     }
 
-    async function testPrint(type) {
-      // TODO: Implement test print
-      // Will send a test ZPL/PDF to the configured printer
-      alert(`Test print for ${type} - Coming soon`);
-    }
-
     function showStatus(message, type) {
       const statusDiv = document.getElementById('status');
       statusDiv.className = `status ${type}`;
       statusDiv.textContent = message;
-
+      statusDiv.style.display = 'block';
       setTimeout(() => {
-        statusDiv.textContent = '';
-        statusDiv.className = '';
+        statusDiv.style.display = 'none';
       }, 3000);
+    }
+
+    function testPrint(type) {
+      alert(`Test print for ${type} - Not yet implemented`);
     }
   </script>
 </body>

@@ -124,6 +124,10 @@ export async function loadConfig(): Promise<StationConfig> {
           is4x6: false
         }
       },
+      templates: {
+        poCartonLabelTemplateId: '',
+        productLabelTemplateId: ''
+      },
       apiUrl: 'http://localhost:3002',
       lastModified: new Date().toISOString()
     };
