@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V3 Print Agent Settings</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 8px;
+      padding: 24px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+      color: #1a1a1a;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+
+    .section {
+      margin-bottom: 24px;
+      padding: 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #555;
+      margin-bottom: 6px;
+    }
+
+    select, input[type="text"] {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d0d0d0;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+    }
+
+    .checkbox-group label {
+      margin: 0;
+      font-weight: normal;
+    }
+
+    button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+    }
+
+    .btn-secondary {
+      background: #6b7280;
+      color: white;
+      margin-left: 8px;
+    }
+
+    .btn-secondary:hover {
+      background: #4b5563;
+    }
+
+    .status {
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 16px;
+      font-size: 14px;
+    }
+
+    .status.success {
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #166534;
+    }
+
+    .status.error {
+      background: #fee2e2;
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+    }
+
+    .buttons {
+      margin-top: 24px;
+      display: flex;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>V3 Print Agent Settings</h1>
+    <p class="subtitle">Configure printers for automatic label and document printing</p>
+
+    <div id="status"></div>
+
+    <div class="section">
+      <div class="section-title">Station Information</div>
+      <div class="form-group">
+        <label>Station ID</label>
+        <input type="text" id="stationId" readonly style="background: #f0f0f0;">
+      </div>
+      <div class="form-group">
+        <label>Station Name</label>
+        <input type="text" id="stationName" placeholder="e.g., Packing Station 1">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Shipping Labels</div>
+      <div class="form-group">
+        <label>Printer</label>
+        <select id="labelPrinter">
+          <option value="">-- Select Printer --</option>
+        </select>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="labelAutoPrint">
+        <label for="labelAutoPrint">Auto-print (no dialog)</label>
+      </div>
+      <button class="btn-secondary" onclick="testPrint('shipping-label')">Test Print</button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Invoices</div>
+      <div class="form-group">
+        <label>Printer</label>
+        <select id="invoicePrinter">
+          <option value="">-- Select Printer --</option>
+        </select>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="invoiceAutoPrint">
+        <label for="invoiceAutoPrint">Auto-print (no dialog)</label>
+      </div>
+      <button class="btn-secondary" onclick="testPrint('invoice')">Test Print</button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Packing Slips</div>
+      <div class="form-group">
+        <label>Printer</label>
+        <select id="packingSlipPrinter">
+          <option value="">-- Select Printer --</option>
+        </select>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="packingSlipAutoPrint">
+        <label for="packingSlipAutoPrint">Auto-print (no dialog)</label>
+      </div>
+      <button class="btn-secondary" onclick="testPrint('packing-slip')">Test Print</button>
+    </div>
+
+    <div class="buttons">
+      <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
+      <button class="btn-secondary" onclick="reloadPrinters()">Refresh Printers</button>
+    </div>
+  </div>
+
+  <script>
+    const { ipcRenderer } = require('electron');
+
+    // Load printers and config on startup
+    window.addEventListener('DOMContentLoaded', async () => {
+      await loadPrinters();
+      await loadConfig();
+    });
+
+    async function loadPrinters() {
+      try {
+        const response = await fetch('http://localhost:8080/printers');
+        const data = await response.json();
+
+        const printers = data.printers || [];
+
+        // Populate all printer dropdowns
+        const selects = ['labelPrinter', 'invoicePrinter', 'packingSlipPrinter'];
+
+        selects.forEach(selectId => {
+          const select = document.getElementById(selectId);
+          select.innerHTML = '<option value="">-- Select Printer --</option>';
+
+          printers.forEach(p => {
+            const option = document.createElement('option');
+            option.value = p.name;
+            option.textContent = `${p.name} ${p.isDefault ? '(Default)' : ''}`;
+            select.appendChild(option);
+          });
+        });
+      } catch (error) {
+        showStatus('Failed to load printers', 'error');
+      }
+    }
+
+    async function loadConfig() {
+      try {
+        const response = await fetch('http://localhost:8080/config');
+        const config = await response.json();
+
+        document.getElementById('stationId').value = config.stationId;
+        document.getElementById('stationName').value = config.stationName;
+
+        // Load printer configs
+        if (config.printers['shipping-label']) {
+          document.getElementById('labelPrinter').value = config.printers['shipping-label'].name || '';
+          document.getElementById('labelAutoPrint').checked = config.printers['shipping-label'].autoPrint || false;
+        }
+
+        if (config.printers.invoice) {
+          document.getElementById('invoicePrinter').value = config.printers.invoice.name || '';
+          document.getElementById('invoiceAutoPrint').checked = config.printers.invoice.autoPrint || false;
+        }
+
+        if (config.printers['packing-slip']) {
+          document.getElementById('packingSlipPrinter').value = config.printers['packing-slip'].name || '';
+          document.getElementById('packingSlipAutoPrint').checked = config.printers['packing-slip'].autoPrint || false;
+        }
+      } catch (error) {
+        showStatus('Failed to load configuration', 'error');
+      }
+    }
+
+    async function saveSettings() {
+      try {
+        const config = {
+          stationName: document.getElementById('stationName').value,
+          printers: {
+            'shipping-label': {
+              name: document.getElementById('labelPrinter').value,
+              autoPrint: document.getElementById('labelAutoPrint').checked,
+              enabled: document.getElementById('labelPrinter').value !== ''
+            },
+            'invoice': {
+              name: document.getElementById('invoicePrinter').value,
+              autoPrint: document.getElementById('invoiceAutoPrint').checked,
+              enabled: document.getElementById('invoicePrinter').value !== ''
+            },
+            'packing-slip': {
+              name: document.getElementById('packingSlipPrinter').value,
+              autoPrint: document.getElementById('packingSlipAutoPrint').checked,
+              enabled: document.getElementById('packingSlipPrinter').value !== ''
+            }
+          }
+        };
+
+        const response = await fetch('http://localhost:8080/config', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(config)
+        });
+
+        if (response.ok) {
+          showStatus('Settings saved successfully!', 'success');
+        } else {
+          showStatus('Failed to save settings', 'error');
+        }
+      } catch (error) {
+        showStatus('Failed to save settings', 'error');
+      }
+    }
+
+    async function reloadPrinters() {
+      await loadPrinters();
+      showStatus('Printers refreshed', 'success');
+    }
+
+    async function testPrint(type) {
+      // TODO: Implement test print
+      // Will send a test ZPL/PDF to the configured printer
+      alert(`Test print for ${type} - Coming soon`);
+    }
+
+    function showStatus(message, type) {
+      const statusDiv = document.getElementById('status');
+      statusDiv.className = `status ${type}`;
+      statusDiv.textContent = message;
+
+      setTimeout(() => {
+        statusDiv.textContent = '';
+        statusDiv.className = '';
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
