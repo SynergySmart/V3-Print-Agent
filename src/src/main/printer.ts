@@ -131,7 +131,7 @@ export async function printDocument(job: PrintJobRequest): Promise<{ printer: st
     await print(tempFile, {
       printer: printerConfig.name,
       scale: scaleOption,  // Smart scaling based on printer type
-      orientation: 'portrait'
+      // No orientation specified - let PDF's natural orientation be used
     });
 
     // Cleanup temp file
