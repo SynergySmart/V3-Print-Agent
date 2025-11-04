@@ -1,6 +1,6 @@
 {
   "name": "v3-print-agent",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "V3 Inventory Print Agent - Auto-print labels and documents to configured printers",
   "main": "dist/main/index.js",
   "author": "V3 Inventory",
