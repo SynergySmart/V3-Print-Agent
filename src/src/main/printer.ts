@@ -123,21 +123,18 @@ export async function printDocument(job: PrintJobRequest): Promise<{ printer: st
     const tempFile = path.join(os.tmpdir(), `v3-print-${Date.now()}.pdf`);
     fs.writeFileSync(tempFile, pdfBuffer);
 
-    // Scale strategy based on printer type:
-    // - 4x6 thermal printer: 'noscale' (print at actual size, paper matches label)
-    // - 8.5x11 standard printer: 'shrink' (shrink to fit with margins, prevents clipping)
-    const scaleOption = printerConfig.is4x6 ? 'noscale' : 'shrink';
-
+    // Use 'fit' scaling - fits to Windows printer's configured paper size
+    // Maintains aspect ratio and respects printer settings (no hardcoded sizes)
     await print(tempFile, {
       printer: printerConfig.name,
-      scale: scaleOption,  // Smart scaling based on printer type
+      scale: 'fit',  // Fit to printer's configured paper size
       // No orientation specified - let PDF's natural orientation be used
     });
 
     // Cleanup temp file
     fs.unlinkSync(tempFile);
 
-    console.log(`[Printer] Job ${job.jobId} sent to printer successfully (scale: ${scaleOption})`);
+    console.log(`[Printer] Job ${job.jobId} sent to printer successfully (scale: fit)`);
 
     return {
       printer: printerConfig.name
