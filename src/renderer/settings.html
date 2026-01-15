@@ -207,6 +207,21 @@
       <button class="btn-secondary" onclick="testPrint('packing-slip')">Test Print</button>
     </div>
 
+    <div class="section" style="border-color: #fbbf24;">
+      <div class="section-title" style="color: #b45309;">📦 FBA Removal Labels (Returns)</div>
+      <div class="form-group">
+        <label>Printer</label>
+        <select id="fbaRemovalPrinter">
+          <option value="">-- Select Printer --</option>
+        </select>
+      </div>
+      <div class="checkbox-group">
+        <input type="checkbox" id="fbaRemovalAutoPrint">
+        <label for="fbaRemovalAutoPrint">Auto-print (no dialog)</label>
+      </div>
+      <button class="btn-secondary" onclick="testPrint('fba-removal')">Test Print</button>
+    </div>
+
     <div class="buttons">
       <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
       <button class="btn-secondary" onclick="reloadPrinters()">Refresh Printers</button>
@@ -230,7 +245,7 @@
         const printers = data.printers || [];
 
         // Populate all printer dropdowns
-        const selects = ['labelPrinter', 'invoicePrinter', 'packingSlipPrinter'];
+        const selects = ['labelPrinter', 'invoicePrinter', 'packingSlipPrinter', 'fbaRemovalPrinter'];
 
         selects.forEach(selectId => {
           const select = document.getElementById(selectId);
@@ -271,6 +286,11 @@
           document.getElementById('packingSlipPrinter').value = config.printers['packing-slip'].name || '';
           document.getElementById('packingSlipAutoPrint').checked = config.printers['packing-slip'].autoPrint || false;
         }
+
+        if (config.printers['fba-removal']) {
+          document.getElementById('fbaRemovalPrinter').value = config.printers['fba-removal'].name || '';
+          document.getElementById('fbaRemovalAutoPrint').checked = config.printers['fba-removal'].autoPrint || false;
+        }
       } catch (error) {
         showStatus('Failed to load configuration', 'error');
       }
@@ -295,6 +315,11 @@
               name: document.getElementById('packingSlipPrinter').value,
               autoPrint: document.getElementById('packingSlipAutoPrint').checked,
               enabled: document.getElementById('packingSlipPrinter').value !== ''
+            },
+            'fba-removal': {
+              name: document.getElementById('fbaRemovalPrinter').value,
+              autoPrint: document.getElementById('fbaRemovalAutoPrint').checked,
+              enabled: document.getElementById('fbaRemovalPrinter').value !== ''
             }
           }
         };

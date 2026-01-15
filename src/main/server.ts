@@ -34,7 +34,7 @@ app.get('/health', (req: Request, res: Response) => {
 
   res.json({
     status: 'healthy',
-    version: '1.0.3',
+    version: '1.0.25',
     stationId: config.stationId,
     stationName: config.stationName,
     timestamp: new Date().toISOString()

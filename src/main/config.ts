@@ -106,6 +106,11 @@ export async function loadConfig(): Promise<StationConfig> {
           name: '',
           autoPrint: false,
           enabled: false
+        },
+        'fba-removal': {
+          name: '',
+          autoPrint: false,
+          enabled: false
         }
       },
       apiUrl: 'http://localhost:3002',
